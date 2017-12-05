@@ -16,12 +16,12 @@
         <properties/>
         <border type="none"/>
         <children>
-          <component id="d7680" class="javax.swing.JLabel">
+          <component id="d7680" class="javax.swing.JLabel" binding="titleLabel">
             <constraints>
               <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Label"/>
+              <text value="CloudSim Example"/>
             </properties>
           </component>
         </children>
@@ -42,36 +42,36 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="e3e15" class="javax.swing.JLabel">
+              <component id="e3e15" class="javax.swing.JLabel" binding="outPutTypeLabel">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Label"/>
+                  <text value="Output Type"/>
                 </properties>
               </component>
-              <component id="6f9fd" class="javax.swing.JLabel">
+              <component id="6f9fd" class="javax.swing.JLabel" binding="powExLabel">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Label"/>
+                  <text value="Power Example"/>
                 </properties>
               </component>
-              <component id="92935" class="javax.swing.JLabel">
+              <component id="92935" class="javax.swing.JLabel" binding="basicExLabel">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Label"/>
+                  <text value="Baic Examples"/>
                 </properties>
               </component>
-              <component id="14cc4" class="javax.swing.JLabel">
+              <component id="14cc4" class="javax.swing.JLabel" binding="netExamLabel">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Label"/>
+                  <text value="Network Example"/>
                 </properties>
               </component>
             </children>
@@ -84,28 +84,28 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="947ca" class="javax.swing.JButton" binding="button1" default-binding="true">
+              <component id="947ca" class="javax.swing.JButton" binding="powExButton">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Button"/>
+                  <text value="RUN"/>
                 </properties>
               </component>
-              <component id="f212e" class="javax.swing.JButton" binding="button2" default-binding="true">
+              <component id="f212e" class="javax.swing.JButton" binding="basicExbutton">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Button"/>
+                  <text value="RUN"/>
                 </properties>
               </component>
-              <component id="eb9c8" class="javax.swing.JButton" binding="button3" default-binding="true">
+              <component id="eb9c8" class="javax.swing.JButton" binding="netExButton">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Button"/>
+                  <text value="RUN"/>
                 </properties>
               </component>
               <vspacer id="2cab2">
@@ -123,39 +123,64 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="c8b8e" class="javax.swing.JRadioButton" binding="radioButton1" default-binding="true">
+              <component id="c8b8e" class="javax.swing.JRadioButton" binding="textRB">
                 <constraints>
                   <grid row="0" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="RadioButton"/>
+                  <enabled value="true"/>
+                  <selected value="true"/>
+                  <text value="Text"/>
                 </properties>
               </component>
-              <component id="10e6d" class="javax.swing.JRadioButton" binding="radioButton2" default-binding="true">
+              <component id="10e6d" class="javax.swing.JRadioButton" binding="graphRB">
                 <constraints>
                   <grid row="0" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="RadioButton"/>
+                  <selected value="false"/>
+                  <text value="Graph"/>
                 </properties>
               </component>
-              <component id="f0f0e" class="javax.swing.JComboBox" binding="comboBox1" default-binding="true">
+              <component id="f0f0e" class="javax.swing.JComboBox" binding="basicComboBox">
                 <constraints>
                   <grid row="1" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <model>
+                    <item value="CloudSim Example2"/>
+                    <item value="CloudSim Example3"/>
+                    <item value="CloudSim Example4"/>
+                    <item value="CloudSim Example5"/>
+                    <item value="CloudSim Example6"/>
+                    <item value="CloudSim Example7"/>
+                    <item value="CloudSim Example8"/>
+                  </model>
+                </properties>
               </component>
-              <component id="630bb" class="javax.swing.JComboBox" binding="comboBox2" default-binding="true">
+              <component id="630bb" class="javax.swing.JComboBox" binding="netComboBox">
                 <constraints>
                   <grid row="2" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <model>
+                    <item value="Network Example1"/>
+                    <item value="Network Example2"/>
+                    <item value="Network Example3"/>
+                    <item value="Network Example4"/>
+                    <item value="Network Example5"/>
+                  </model>
+                </properties>
               </component>
-              <component id="a0d3e" class="javax.swing.JComboBox" binding="comboBox3" default-binding="true">
+              <component id="a0d3e" class="javax.swing.JComboBox" binding="powComboBox">
                 <constraints>
                   <grid row="3" column="0" row-span="1" col-span="3" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
                 </constraints>
-                <properties/>
+                <properties>
+                  <model>
+                    <item value="DVFS"/>
+                  </model>
+                </properties>
               </component>
             </children>
           </grid>

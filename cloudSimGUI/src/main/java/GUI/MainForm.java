@@ -4,6 +4,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/***
+ * @author ZYP
+ */
 public class MainForm {
     private JPanel title;
     private JPanel centerPanel;
@@ -14,14 +17,6 @@ public class MainForm {
     private JLabel exampleLabel;
     private JLabel simulationLabel;
     private JPanel mainPanel;
-
-    public MainForm() {
-        exampleButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-            }
-        });
-    }
 
     public  void test() {
         JFrame frame = new JFrame("MainForm");
