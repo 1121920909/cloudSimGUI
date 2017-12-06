@@ -12,7 +12,10 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class BasicExample {
-    public DatacenterBroker createBroker(String name){
+    protected List<Cloudlet> cloudletList;
+    protected List<Vm> vmList;
+    protected List<Cloudlet> resultCloudletList;
+    protected DatacenterBroker createBroker(String name){
         DatacenterBroker datacenterBroker = null;
         try {
             if(datacenterBroker == null){
@@ -24,7 +27,7 @@ public class BasicExample {
         }
         return datacenterBroker;
     }
-    public Datacenter createDatacenter(String name) {
+    protected Datacenter createDatacenter(String name) {
 
         // Here are the steps needed to create a PowerDatacenter:
         // 1. We need to create a list to store
@@ -88,15 +91,15 @@ public class BasicExample {
 
         return datacenter;
     }
-    public String formatInfo(List<Cloudlet> list){
+    public String formatInfo(){
         StringBuilder sb = new StringBuilder();
         Cloudlet cloudlet;
         String indent = "\t";
         sb.append("========== OUTPUT ==========\n");
         sb.append("Cloudlet ID\tSTATUS\tData center ID\tVM ID\tTime\tStart Time\tFinish Time\n");
         DecimalFormat dft = new DecimalFormat("###.##");
-        for(int i = 0;i < list.size();i++){
-            cloudlet = list.get(i);
+        for(int i = 0;i < cloudletList.size();i++){
+            cloudlet = cloudletList.get(i);
             sb.append(indent + cloudlet.getCloudletId() + indent + indent);
             if(cloudlet.getStatus() == Cloudlet.SUCCESS){
                 sb.append("SUCCESS"+indent + indent + cloudlet.getResourceId()

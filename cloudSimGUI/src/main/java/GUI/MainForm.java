@@ -18,7 +18,16 @@ public class MainForm {
     private JLabel simulationLabel;
     private JPanel mainPanel;
 
-    public  void test() {
+    public MainForm() {
+        exampleButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ExampleForm exampleForm = new ExampleForm();
+                exampleForm.showForm();
+            }
+        });
+    }
+
+    public  void showForm() {
         JFrame frame = new JFrame("MainForm");
         frame.setContentPane(new MainForm().mainPanel);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

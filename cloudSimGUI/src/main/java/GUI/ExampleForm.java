@@ -1,5 +1,7 @@
 package GUI;
 
+import example.basic.CloudSimExample1;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,10 +30,20 @@ public class ExampleForm {
     private JLabel netExamLabel;
     private JLabel powExLabel;
 
+    public void showForm() {
+        JFrame frame = new JFrame("ExampleForm");
+        frame.setContentPane(new ExampleForm().mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
     public ExampleForm() {
         basicExbutton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-
+                CloudSimExample1 cloudSimExample1 = new CloudSimExample1();
+                ResultForm rf = new ResultForm(cloudSimExample1.formatInfo());
+                rf.show();
             }
         });
     }
