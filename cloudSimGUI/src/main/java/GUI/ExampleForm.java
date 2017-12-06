@@ -1,6 +1,8 @@
 package GUI;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /***
  * @author ZYP
@@ -25,4 +27,12 @@ public class ExampleForm {
     private JLabel basicExLabel;
     private JLabel netExamLabel;
     private JLabel powExLabel;
+
+    public ExampleForm() {
+        basicExbutton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+
+            }
+        });
+    }
 }

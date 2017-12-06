@@ -16,6 +16,16 @@
                 <scope>system</scope>
                 <systemPath>C:/file/cloudSim/cloudsim-cloudsim-4.0/cloudsim-cloudsim-4.0/modules/cloudsim/target/cloudsim-4.0.jar</systemPath>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter</artifactId>
+                <version>1.3.3.RELEASE</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>1.3.3.RELEASE</version>
+            </dependency>
         </dependencies>
 
 </project>

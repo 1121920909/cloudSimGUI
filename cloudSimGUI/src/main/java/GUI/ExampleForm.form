@@ -148,6 +148,7 @@
                 </constraints>
                 <properties>
                   <model>
+                    <item value="CloudSim Example1"/>
                     <item value="CloudSim Example2"/>
                     <item value="CloudSim Example3"/>
                     <item value="CloudSim Example4"/>
