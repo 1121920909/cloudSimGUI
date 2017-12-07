@@ -148,14 +148,14 @@
                 </constraints>
                 <properties>
                   <model>
-                    <item value="CloudSim Example1"/>
-                    <item value="CloudSim Example2"/>
-                    <item value="CloudSim Example3"/>
-                    <item value="CloudSim Example4"/>
-                    <item value="CloudSim Example5"/>
-                    <item value="CloudSim Example6"/>
-                    <item value="CloudSim Example7"/>
-                    <item value="CloudSim Example8"/>
+                    <item value="cloudSimExample1"/>
+                    <item value="cloudSimExample2"/>
+                    <item value="cloudSimExample3"/>
+                    <item value="cloudSimExample4"/>
+                    <item value="cloudSimExample5"/>
+                    <item value="cloudSimExample6"/>
+                    <item value="cloudSimExample7"/>
+                    <item value="cloudSimExample8"/>
                   </model>
                 </properties>
               </component>

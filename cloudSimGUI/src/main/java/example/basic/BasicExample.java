@@ -100,14 +100,14 @@ public class BasicExample {
         DecimalFormat dft = new DecimalFormat("###.##");
         for(int i = 0;i < cloudletList.size();i++){
             cloudlet = cloudletList.get(i);
-            sb.append(indent + cloudlet.getCloudletId() + indent + indent);
+            sb.append(cloudlet.getCloudletId() + indent);
             if(cloudlet.getStatus() == Cloudlet.SUCCESS){
-                sb.append("SUCCESS"+indent + indent + cloudlet.getResourceId()
-                        + indent + indent + indent + cloudlet.getVmId()
-                        + indent + indent
+                sb.append("SUCCESS"+indent + cloudlet.getResourceId()
+                        + indent + cloudlet.getVmId()
+                        + indent
                         + dft.format(cloudlet.getActualCPUTime()) + indent
-                        + indent + dft.format(cloudlet.getExecStartTime())
-                        + indent + indent + indent
+                        + dft.format(cloudlet.getExecStartTime())
+                        + indent
                         + dft.format(cloudlet.getFinishTime()) + "\n");
             }
 

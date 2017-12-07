@@ -1,6 +1,10 @@
 package GUI;
 
+import example.basic.BasicExample;
 import example.basic.CloudSimExample1;
+import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -41,9 +45,11 @@ public class ExampleForm {
     public ExampleForm() {
         basicExbutton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                CloudSimExample1 cloudSimExample1 = new CloudSimExample1();
-                ResultForm rf = new ResultForm(cloudSimExample1.formatInfo());
-                rf.show();
+                String select = basicComboBox.getSelectedItem().toString();
+                String configPath = "example/basic/beans.xml";
+                ApplicationContext context = new ClassPathXmlApplicationContext(configPath);
+                BasicExample basicExample = (BasicExample) context.getBean(select);
+                ResultForm.show(basicExample.formatInfo());
             }
         });
     }
