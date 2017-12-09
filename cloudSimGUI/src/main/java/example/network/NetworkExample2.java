@@ -7,6 +7,7 @@
  * Copyright (c) 2009, The University of Melbourne, Australia
  */
 
+
 package example.network;
 
 import org.cloudbus.cloudsim.*;
@@ -23,10 +24,11 @@ import java.util.List;
 
 /**
  * A simple example showing how to create
- * a datacenter with one host and a network
- * topology and and run one cloudlet on it.
+ * two datacenters with one host and a
+ * network topology each and run two cloudlets
+ * on them.
  */
-public class NetworkExample1 implements FormatInfo{
+public class NetworkExample2 implements FormatInfo{
 
 	/** The cloudlet list. */
 	private List<Cloudlet> cloudletList;
@@ -34,15 +36,13 @@ public class NetworkExample1 implements FormatInfo{
 	/** The vmlist. */
 	private List<Vm> vmlist;
 
-	/** The result list*/
-	List<Cloudlet> resultList;
-
+	private List<Cloudlet> resultList;
 	/**
 	 * Creates main() to run this example
 	 */
-	public NetworkExample1() {
+	public NetworkExample2(){
 
-		Log.printLine("Starting NetworkExample1...");
+		Log.printLine("Starting NetworkExample2...");
 
 		try {
 			// First step: Initialize the CloudSim package. It should be called
@@ -57,6 +57,7 @@ public class NetworkExample1 implements FormatInfo{
 			// Second step: Create Datacenters
 			//Datacenters are the resource providers in CloudSim. We need at list one of them to run a CloudSim simulation
 			Datacenter datacenter0 = createDatacenter("Datacenter_0");
+			Datacenter datacenter1 = createDatacenter("Datacenter_1");
 
 			//Third step: Create Broker
 			DatacenterBroker broker = createBroker();
@@ -74,17 +75,22 @@ public class NetworkExample1 implements FormatInfo{
 			int pesNumber = 1; //number of cpus
 			String vmm = "Xen"; //VMM name
 
-			//create VM
+			//create two VMs
 			Vm vm1 = new Vm(vmid, brokerId, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerTimeShared());
 
-			//add the VM to the vmList
+			//the second VM will have twice the priority of VM1 and so will receive twice CPU time
+			vmid++;
+			Vm vm2 = new Vm(vmid, brokerId, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerTimeShared());
+
+			//add the VMs to the vmList
 			vmlist.add(vm1);
+			vmlist.add(vm2);
 
 			//submit vm list to the broker
 			broker.submitVmList(vmlist);
 
 
-			//Fifth step: Create one Cloudlet
+			//Fifth step: Create two Cloudlets
 			cloudletList = new ArrayList<Cloudlet>();
 
 			//Cloudlet properties
@@ -97,27 +103,43 @@ public class NetworkExample1 implements FormatInfo{
 			Cloudlet cloudlet1 = new Cloudlet(id, length, pesNumber, fileSize, outputSize, utilizationModel, utilizationModel, utilizationModel);
 			cloudlet1.setUserId(brokerId);
 
-			//add the cloudlet to the list
+			id++;
+			Cloudlet cloudlet2 = new Cloudlet(id, length, pesNumber, fileSize, outputSize, utilizationModel, utilizationModel, utilizationModel);
+			cloudlet2.setUserId(brokerId);
+
+			//add the cloudlets to the list
 			cloudletList.add(cloudlet1);
+			cloudletList.add(cloudlet2);
 
 			//submit cloudlet list to the broker
 			broker.submitCloudletList(cloudletList);
+
+
+			//bind the cloudlets to the vms. This way, the broker
+			// will submit the bound cloudlets only to the specific VM
+			broker.bindCloudletToVm(cloudlet1.getCloudletId(),vm1.getId());
+			broker.bindCloudletToVm(cloudlet2.getCloudletId(),vm2.getId());
+
 
 			//Sixth step: configure network
 			//load the network topology file
 			NetworkTopology.buildNetworkTopology("topology.brite");
 
 			//maps CloudSim entities to BRITE entities
-			//PowerDatacenter will correspond to BRITE node 0
+			//Datacenter0 will correspond to BRITE node 0
 			int briteNode=0;
 			NetworkTopology.mapNode(datacenter0.getId(),briteNode);
+
+			//Datacenter1 will correspond to BRITE node 2
+			briteNode=2;
+			NetworkTopology.mapNode(datacenter1.getId(),briteNode);
 
 			//Broker will correspond to BRITE node 3
 			briteNode=3;
 			NetworkTopology.mapNode(broker.getId(),briteNode);
 
 
-			// Seventh step: Starts the simulation
+			// Sixth step: Starts the simulation
 			CloudSim.startSimulation();
 
 
@@ -128,7 +150,7 @@ public class NetworkExample1 implements FormatInfo{
 
 			printCloudletList(resultList);
 
-			Log.printLine("NetworkExample1 finished!");
+			Log.printLine("NetworkExample2 finished!");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -149,7 +171,7 @@ public class NetworkExample1 implements FormatInfo{
 
 		int mips = 1000;
 
-		// 3. Create PEs and add these into a list.
+		// 3. Create PEs and add these into a list
 		peList.add(new Pe(0, new PeProvisionerSimple(mips))); // need to store Pe id and MIPS Rating
 
 		//4. Create Host with its id and list of PEs and add them to the list of machines
@@ -158,6 +180,9 @@ public class NetworkExample1 implements FormatInfo{
 		long storage = 1000000; //host storage
 		int bw = 10000;
 
+
+		//in this example, the VMAllocatonPolicy in use is Time Shared with priorities. It means that VMs
+		//receive time shares accroding to their priority.
 		hostList.add(
 				new Host(
 					hostId,

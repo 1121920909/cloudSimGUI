@@ -23,31 +23,33 @@ import java.util.List;
 
 /**
  * A simple example showing how to create
- * a datacenter with one host and a network
- * topology and and run one cloudlet on it.
+ * two datacenters with one host each and
+ * run cloudlets of two users with network
+ * topology on them.
  */
-public class NetworkExample1 implements FormatInfo{
+public class NetworkExample3 implements FormatInfo{
 
 	/** The cloudlet list. */
-	private List<Cloudlet> cloudletList;
-
+	private List<Cloudlet> cloudletList1;
+	private List<Cloudlet> cloudletList2;
+	private List<Cloudlet> resultList1;
+	private List<Cloudlet> resultList2;
 	/** The vmlist. */
-	private List<Vm> vmlist;
+	private List<Vm> vmlist1;
+	private List<Vm> vmlist2;
 
-	/** The result list*/
-	List<Cloudlet> resultList;
 
 	/**
 	 * Creates main() to run this example
 	 */
-	public NetworkExample1() {
+	public NetworkExample3() {
 
-		Log.printLine("Starting NetworkExample1...");
+		Log.printLine("Starting NetworkExample3...");
 
 		try {
 			// First step: Initialize the CloudSim package. It should be called
 			// before creating any entities.
-			int num_user = 1;   // number of cloud users
+			int num_user = 2;   // number of cloud users
 			Calendar calendar = Calendar.getInstance();
 			boolean trace_flag = false;  // mean trace events
 
@@ -57,35 +59,45 @@ public class NetworkExample1 implements FormatInfo{
 			// Second step: Create Datacenters
 			//Datacenters are the resource providers in CloudSim. We need at list one of them to run a CloudSim simulation
 			Datacenter datacenter0 = createDatacenter("Datacenter_0");
+			Datacenter datacenter1 = createDatacenter("Datacenter_1");
 
-			//Third step: Create Broker
-			DatacenterBroker broker = createBroker();
-			int brokerId = broker.getId();
+			//Third step: Create Brokers
+			DatacenterBroker broker1 = createBroker(1);
+			int brokerId1 = broker1.getId();
 
-			//Fourth step: Create one virtual machine
-			vmlist = new ArrayList<Vm>();
+			DatacenterBroker broker2 = createBroker(2);
+			int brokerId2 = broker2.getId();
+
+			//Fourth step: Create one virtual machine for each broker/user
+			vmlist1 = new ArrayList<Vm>();
+			vmlist2 = new ArrayList<Vm>();
 
 			//VM description
 			int vmid = 0;
-			int mips = 250;
 			long size = 10000; //image size (MB)
+			int mips = 250;
 			int ram = 512; //vm memory (MB)
 			long bw = 1000;
 			int pesNumber = 1; //number of cpus
 			String vmm = "Xen"; //VMM name
 
-			//create VM
-			Vm vm1 = new Vm(vmid, brokerId, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerTimeShared());
+			//create two VMs: the first one belongs to user1
+			Vm vm1 = new Vm(vmid, brokerId1, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerTimeShared());
 
-			//add the VM to the vmList
-			vmlist.add(vm1);
+			//the second VM: this one belongs to user2
+			Vm vm2 = new Vm(vmid, brokerId2, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerTimeShared());
+
+			//add the VMs to the vmlists
+			vmlist1.add(vm1);
+			vmlist2.add(vm2);
 
 			//submit vm list to the broker
-			broker.submitVmList(vmlist);
+			broker1.submitVmList(vmlist1);
+			broker2.submitVmList(vmlist2);
 
-
-			//Fifth step: Create one Cloudlet
-			cloudletList = new ArrayList<Cloudlet>();
+			//Fifth step: Create two Cloudlets
+			cloudletList1 = new ArrayList<Cloudlet>();
+			cloudletList2 = new ArrayList<Cloudlet>();
 
 			//Cloudlet properties
 			int id = 0;
@@ -95,40 +107,57 @@ public class NetworkExample1 implements FormatInfo{
 			UtilizationModel utilizationModel = new UtilizationModelFull();
 
 			Cloudlet cloudlet1 = new Cloudlet(id, length, pesNumber, fileSize, outputSize, utilizationModel, utilizationModel, utilizationModel);
-			cloudlet1.setUserId(brokerId);
+			cloudlet1.setUserId(brokerId1);
 
-			//add the cloudlet to the list
-			cloudletList.add(cloudlet1);
+			Cloudlet cloudlet2 = new Cloudlet(id, length, pesNumber, fileSize, outputSize, utilizationModel, utilizationModel, utilizationModel);
+			cloudlet2.setUserId(brokerId2);
 
-			//submit cloudlet list to the broker
-			broker.submitCloudletList(cloudletList);
+			//add the cloudlets to the lists: each cloudlet belongs to one user
+			cloudletList1.add(cloudlet1);
+			cloudletList2.add(cloudlet2);
+
+			//submit cloudlet list to the brokers
+			broker1.submitCloudletList(cloudletList1);
+			broker2.submitCloudletList(cloudletList2);
+
 
 			//Sixth step: configure network
 			//load the network topology file
 			NetworkTopology.buildNetworkTopology("topology.brite");
 
 			//maps CloudSim entities to BRITE entities
-			//PowerDatacenter will correspond to BRITE node 0
+			//Datacenter0 will correspond to BRITE node 0
 			int briteNode=0;
 			NetworkTopology.mapNode(datacenter0.getId(),briteNode);
 
-			//Broker will correspond to BRITE node 3
+			//Datacenter1 will correspond to BRITE node 2
+			briteNode=2;
+			NetworkTopology.mapNode(datacenter1.getId(),briteNode);
+
+			//Broker1 will correspond to BRITE node 3
 			briteNode=3;
-			NetworkTopology.mapNode(broker.getId(),briteNode);
+			NetworkTopology.mapNode(broker1.getId(),briteNode);
 
+			//Broker2 will correspond to BRITE node 4
+			briteNode=4;
+			NetworkTopology.mapNode(broker2.getId(),briteNode);
 
-			// Seventh step: Starts the simulation
+			// Sixth step: Starts the simulation
 			CloudSim.startSimulation();
 
-
 			// Final step: Print results when simulation is over
-			resultList = broker.getCloudletReceivedList();
+			resultList1 = broker1.getCloudletReceivedList();
+			resultList2 = broker2.getCloudletReceivedList();
 
 			CloudSim.stopSimulation();
 
-			printCloudletList(resultList);
+			Log.print("=============> User "+brokerId1+"    ");
+			printCloudletList(resultList1);
 
-			Log.printLine("NetworkExample1 finished!");
+			Log.print("=============> User "+brokerId2+"    ");
+			printCloudletList(resultList2);
+
+			Log.printLine("NetworkExample3 finished!");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -158,6 +187,9 @@ public class NetworkExample1 implements FormatInfo{
 		long storage = 1000000; //host storage
 		int bw = 10000;
 
+
+		//in this example, the VMAllocatonPolicy in use is SpaceShared. It means that only one VM
+		//is allowed to run on each Pe. As each Host has only one Pe, only one VM can run on each Host.
 		hostList.add(
 				new Host(
 					hostId,
@@ -165,7 +197,7 @@ public class NetworkExample1 implements FormatInfo{
 					new BwProvisionerSimple(bw),
 					storage,
 					peList,
-					new VmSchedulerTimeShared(peList)
+					new VmSchedulerSpaceShared(peList)
 				)
 			); // This is our machine
 
@@ -201,11 +233,11 @@ public class NetworkExample1 implements FormatInfo{
 
 	//We strongly encourage users to develop their own broker policies, to submit vms and cloudlets according
 	//to the specific rules of the simulated scenario
-	private DatacenterBroker createBroker(){
+	private DatacenterBroker createBroker(int id){
 
 		DatacenterBroker broker = null;
 		try {
-			broker = new DatacenterBroker("Broker");
+			broker = new DatacenterBroker("Broker"+id);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -243,19 +275,19 @@ public class NetworkExample1 implements FormatInfo{
 
 	}
 
+
 	@Override
-	public String formatInfo(){
+	public String formatInfo() {
 		StringBuilder sb = new StringBuilder();
-		Cloudlet cloudlet;
+		DecimalFormat dft = new DecimalFormat("###.##");
 		String indent = "\t";
+		sb.append("============> User 4\n");
 		sb.append("========== OUTPUT ==========\n");
 		sb.append("Cloudlet ID\tSTATUS\tData center ID\tVM ID\tTime\tStart Time\tFinish Time\n");
-		DecimalFormat dft = new DecimalFormat("###.##");
-		for(int i = 0;i < resultList.size();i++){
-			cloudlet = resultList.get(i);
+		for(Cloudlet cloudlet : resultList1){
 			sb.append(cloudlet.getCloudletId() + indent);
 			if(cloudlet.getStatus() == Cloudlet.SUCCESS){
-				sb.append("SUCCESS" + indent + cloudlet.getResourceId()
+				sb.append("SUCCESS"+indent + cloudlet.getResourceId()
 						+ indent + cloudlet.getVmId()
 						+ indent
 						+ dft.format(cloudlet.getActualCPUTime()) + indent
@@ -263,7 +295,21 @@ public class NetworkExample1 implements FormatInfo{
 						+ indent
 						+ dft.format(cloudlet.getFinishTime()) + "\n");
 			}
-
+		}
+		sb.append("============> User 5\n");
+		sb.append("========== OUTPUT ==========\n");
+		sb.append("Cloudlet ID\tSTATUS\tData center ID\tVM ID\tTime\tStart Time\tFinish Time\n");
+		for(Cloudlet cloudlet : resultList2){
+			sb.append(cloudlet.getCloudletId() + indent);
+			if(cloudlet.getStatus() == Cloudlet.SUCCESS){
+				sb.append("SUCCESS"+indent + cloudlet.getResourceId()
+						+ indent + cloudlet.getVmId()
+						+ indent
+						+ dft.format(cloudlet.getActualCPUTime()) + indent
+						+ dft.format(cloudlet.getExecStartTime())
+						+ indent
+						+ dft.format(cloudlet.getFinishTime()) + "\n");
+			}
 		}
 		return sb.toString();
 	}

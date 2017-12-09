@@ -2,6 +2,7 @@ package GUI;
 
 import example.basic.BasicExample;
 import example.basic.CloudSimExample1;
+import example.network.FormatInfo;
 import example.power.PowerExampleFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
@@ -15,8 +16,6 @@ import java.awt.event.ActionListener;
  * @author ZYP
  */
 public class ExampleForm {
-    private JRadioButton textRB;
-    private JRadioButton graphRB;
     private JComboBox basicComboBox;
     private JComboBox netComboBox;
     private JComboBox powComboBox;
@@ -30,7 +29,6 @@ public class ExampleForm {
     private JPanel choosePanel;
     private JPanel buttonPanel;
     private JLabel titleLabel;
-    private JLabel outPutTypeLabel;
     private JLabel basicExLabel;
     private JLabel netExamLabel;
     private JLabel powExLabel;
@@ -57,7 +55,11 @@ public class ExampleForm {
         netExButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String select = basicComboBox.getSelectedItem().toString();
+                String select = netComboBox.getSelectedItem().toString();
+                String configPath = "example/network/beans.xml";
+                ApplicationContext context = new ClassPathXmlApplicationContext(configPath);
+                FormatInfo example = (FormatInfo) context.getBean(select);
+                ResultForm.show(example.formatInfo());
             }
         });
         powExButton.addActionListener(new ActionListener() {

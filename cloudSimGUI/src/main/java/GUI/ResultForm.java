@@ -16,7 +16,7 @@ public class ResultForm {
     public static void show(String text){
         JFrame frame = new JFrame("ResultForm");
         frame.setContentPane((new ResultForm(text)).panel1);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         frame.pack();
         frame.setVisible(true);
     }

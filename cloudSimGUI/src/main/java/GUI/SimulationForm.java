@@ -9,8 +9,6 @@ public class SimulationForm {
     private JRadioButton dataNum1Button;
     private JRadioButton dataNum2Button;
     private JComboBox comboBox3;
-    private JRadioButton TextRB;
-    private JRadioButton GraphRB;
     private JButton runButton;
     private JPanel mainPanel;
     private JPanel titlePanel;
@@ -18,7 +16,6 @@ public class SimulationForm {
     private JPanel simulationPanel;
     private JPanel dataNumPanel;
     private JPanel algorithmPanel;
-    private JPanel TypePanel;
     private JPanel bottomPanel;
     private JLabel titleLabel;
     private JLabel cloNumLabel;
@@ -28,5 +25,4 @@ public class SimulationForm {
     private JLabel mIPSLabel;
     private JLabel dataCenterLabel;
     private JLabel AlgorithmLabel;
-    private JLabel TypeLabel;
 }

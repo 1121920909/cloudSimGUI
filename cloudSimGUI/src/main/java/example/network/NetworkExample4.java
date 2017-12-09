@@ -25,24 +25,23 @@ import java.util.List;
  * A simple example showing how to create
  * a datacenter with one host and a network
  * topology and and run one cloudlet on it.
+ * Here, instead of using a BRIE file describing
+ * the links, links are inserted in the code.
  */
-public class NetworkExample1 implements FormatInfo{
+public class NetworkExample4 implements FormatInfo{
 
 	/** The cloudlet list. */
 	private List<Cloudlet> cloudletList;
-
+	private List<Cloudlet> resultList;
 	/** The vmlist. */
 	private List<Vm> vmlist;
-
-	/** The result list*/
-	List<Cloudlet> resultList;
 
 	/**
 	 * Creates main() to run this example
 	 */
-	public NetworkExample1() {
+	public NetworkExample4() {
 
-		Log.printLine("Starting NetworkExample1...");
+		Log.printLine("Starting NetworkExample4...");
 
 		try {
 			// First step: Initialize the CloudSim package. It should be called
@@ -104,22 +103,12 @@ public class NetworkExample1 implements FormatInfo{
 			broker.submitCloudletList(cloudletList);
 
 			//Sixth step: configure network
-			//load the network topology file
-			NetworkTopology.buildNetworkTopology("topology.brite");
 
 			//maps CloudSim entities to BRITE entities
-			//PowerDatacenter will correspond to BRITE node 0
-			int briteNode=0;
-			NetworkTopology.mapNode(datacenter0.getId(),briteNode);
-
-			//Broker will correspond to BRITE node 3
-			briteNode=3;
-			NetworkTopology.mapNode(broker.getId(),briteNode);
-
-
+			NetworkTopology.addLink(datacenter0.getId(), broker.getId(),10.0,10);
+                        
 			// Seventh step: Starts the simulation
 			CloudSim.startSimulation();
-
 
 			// Final step: Print results when simulation is over
 			resultList = broker.getCloudletReceivedList();
@@ -128,7 +117,7 @@ public class NetworkExample1 implements FormatInfo{
 
 			printCloudletList(resultList);
 
-			Log.printLine("NetworkExample1 finished!");
+			Log.printLine("NetworkExample4 finished!");
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -242,7 +231,6 @@ public class NetworkExample1 implements FormatInfo{
 		}
 
 	}
-
 	@Override
 	public String formatInfo(){
 		StringBuilder sb = new StringBuilder();
