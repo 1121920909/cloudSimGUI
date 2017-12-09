@@ -40,6 +40,9 @@ public abstract class RunnerAbstract {
 	/** The host list. */
 	protected static List<PowerHost> hostList;
 
+
+	/** The result String*/
+	protected  String result;
 	/**
 	 * Run.
 	 * 
@@ -160,13 +163,13 @@ public abstract class RunnerAbstract {
 
 			CloudSim.stopSimulation();
 
-			Helper.printResults(
-					datacenter,
-					vmList,
-					lastClock,
-					experimentName,
-					Constants.OUTPUT_CSV,
-					outputFolder);
+			result = Helper.printResults(
+							datacenter,
+							vmList,
+							lastClock,
+							experimentName,
+							Constants.OUTPUT_CSV,
+							outputFolder);
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -316,4 +319,7 @@ public abstract class RunnerAbstract {
 		return enableOutput;
 	}
 
+	public String getResult() {
+		return result;
+	}
 }

@@ -102,7 +102,7 @@ public class BasicExample {
             cloudlet = cloudletList.get(i);
             sb.append(cloudlet.getCloudletId() + indent);
             if(cloudlet.getStatus() == Cloudlet.SUCCESS){
-                sb.append("SUCCESS"+indent + cloudlet.getResourceId()
+                sb.append("SUCCESS" + indent + cloudlet.getResourceId()
                         + indent + cloudlet.getVmId()
                         + indent
                         + dft.format(cloudlet.getActualCPUTime()) + indent

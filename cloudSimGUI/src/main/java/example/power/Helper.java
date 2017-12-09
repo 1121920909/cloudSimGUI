@@ -6,6 +6,7 @@ import org.cloudbus.cloudsim.provisioners.BwProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.PeProvisionerSimple;
 import org.cloudbus.cloudsim.provisioners.RamProvisionerSimple;
 import org.cloudbus.cloudsim.util.MathUtil;
+import org.springframework.core.io.ResourceLoader;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -109,7 +110,6 @@ public class Helper {
 	 * @param datacenterClass the datacenter class
 	 * @param hostList the host list
 	 * @param vmAllocationPolicy the vm allocation policy
-	 * @param simulationLength
 	 * 
 	 * @return the power datacenter
 	 * 
@@ -218,7 +218,7 @@ public class Helper {
 	 * @param outputInCsv the output in csv
 	 * @param outputFolder the output folder
 	 */
-	public static void printResults(
+	public static String printResults(
 			PowerDatacenter datacenter,
 			List<Vm> vms,
 			double lastClock,
@@ -227,6 +227,9 @@ public class Helper {
 			String outputFolder) {
 		Log.enable();
 		List<Host> hosts = datacenter.getHostList();
+
+		//return result String
+		StringBuilder resultSB = new StringBuilder();
 
 		int numberOfHosts = hosts.size();
 		int numberOfVms = vms.size();
@@ -359,36 +362,62 @@ public class Helper {
 			Log.setDisabled(false);
 			Log.printLine();
 			Log.printLine(String.format("Experiment name: " + experimentName));
+			resultSB.append(String.format("Experiment name: " + experimentName) + "\n");
 			Log.printLine(String.format("Number of hosts: " + numberOfHosts));
+			resultSB.append(String.format("Number of hosts: " + numberOfHosts) + "\n");
 			Log.printLine(String.format("Number of VMs: " + numberOfVms));
+			resultSB.append(String.format("Number of VMs: " + numberOfVms) + "\n");
 			Log.printLine(String.format("Total simulation time: %.2f sec", totalSimulationTime));
+			resultSB.append(String.format("Total simulation time: %.2f sec", totalSimulationTime) + "\n");
 			Log.printLine(String.format("Energy consumption: %.2f kWh", energy));
+			resultSB.append(String.format("Energy consumption: %.2f kWh", energy) + "\n");
 			Log.printLine(String.format("Number of VM migrations: %d", numberOfMigrations));
+			resultSB.append(String.format("Number of VM migrations: %d", numberOfMigrations) + "\n");
 			Log.printLine(String.format("SLA: %.5f%%", sla * 100));
+			resultSB.append(String.format("SLA: %.5f%%", sla * 100) + "\n");
 			Log.printLine(String.format(
 					"SLA perf degradation due to migration: %.2f%%",
 					slaDegradationDueToMigration * 100));
+			resultSB.append(String.format(
+					"SLA perf degradation due to migration: %.2f%%",
+					slaDegradationDueToMigration * 100) + "\n");
 			Log.printLine(String.format("SLA time per active host: %.2f%%", slaTimePerActiveHost * 100));
+			resultSB.append(String.format("SLA time per active host: %.2f%%", slaTimePerActiveHost * 100) + "\n");
 			Log.printLine(String.format("Overall SLA violation: %.2f%%", slaOverall * 100));
+			resultSB.append(String.format("Overall SLA violation: %.2f%%", slaOverall * 100) + "\n");
 			Log.printLine(String.format("Average SLA violation: %.2f%%", slaAverage * 100));
+			resultSB.append(String.format("Average SLA violation: %.2f%%", slaAverage * 100) + "\n");
 			// Log.printLine(String.format("SLA time per VM with migration: %.2f%%",
 			// slaTimePerVmWithMigration * 100));
 			// Log.printLine(String.format("SLA time per VM without migration: %.2f%%",
 			// slaTimePerVmWithoutMigration * 100));
 			// Log.printLine(String.format("SLA time per host: %.2f%%", slaTimePerHost * 100));
 			Log.printLine(String.format("Number of host shutdowns: %d", numberOfHostShutdowns));
+			resultSB.append(String.format("Number of host shutdowns: %d", numberOfHostShutdowns) + "\n");
 			Log.printLine(String.format(
 					"Mean time before a host shutdown: %.2f sec",
 					meanTimeBeforeHostShutdown));
+			resultSB.append(String.format(
+					"Mean time before a host shutdown: %.2f sec",
+					meanTimeBeforeHostShutdown) + "\n");
 			Log.printLine(String.format(
 					"StDev time before a host shutdown: %.2f sec",
 					stDevTimeBeforeHostShutdown));
+			resultSB.append(String.format(
+					"StDev time before a host shutdown: %.2f sec",
+					stDevTimeBeforeHostShutdown) + "\n");
 			Log.printLine(String.format(
 					"Mean time before a VM migration: %.2f sec",
 					meanTimeBeforeVmMigration));
+			resultSB.append(String.format(
+					"Mean time before a VM migration: %.2f sec",
+					meanTimeBeforeVmMigration) + "\n");
 			Log.printLine(String.format(
 					"StDev time before a VM migration: %.2f sec",
 					stDevTimeBeforeVmMigration));
+			resultSB.append(String.format(
+					"StDev time before a VM migration: %.2f sec",
+					stDevTimeBeforeVmMigration) + "\n");
 
 			if (datacenter.getVmAllocationPolicy() instanceof PowerVmAllocationPolicyMigrationAbstract) {
 				PowerVmAllocationPolicyMigrationAbstract vmAllocationPolicy = (PowerVmAllocationPolicyMigrationAbstract) datacenter
@@ -414,29 +443,51 @@ public class Helper {
 				Log.printLine(String.format(
 						"Execution time - VM selection mean: %.5f sec",
 						executionTimeVmSelectionMean));
+				resultSB.append(String.format(
+						"Execution time - VM selection mean: %.5f sec",
+						executionTimeVmSelectionMean) + "\n");
 				Log.printLine(String.format(
 						"Execution time - VM selection stDev: %.5f sec",
 						executionTimeVmSelectionStDev));
+				resultSB.append(String.format(
+						"Execution time - VM selection stDev: %.5f sec",
+						executionTimeVmSelectionStDev) + "\n");
 				Log.printLine(String.format(
 						"Execution time - host selection mean: %.5f sec",
 						executionTimeHostSelectionMean));
+				resultSB.append(String.format(
+						"Execution time - host selection mean: %.5f sec",
+						executionTimeHostSelectionMean) + "\n");
 				Log.printLine(String.format(
 						"Execution time - host selection stDev: %.5f sec",
 						executionTimeHostSelectionStDev));
+				resultSB.append(String.format(
+						"Execution time - host selection stDev: %.5f sec",
+						executionTimeHostSelectionStDev) + "\n");
 				Log.printLine(String.format(
 						"Execution time - VM reallocation mean: %.5f sec",
 						executionTimeVmReallocationMean));
+				resultSB.append(String.format(
+						"Execution time - VM reallocation mean: %.5f sec",
+						executionTimeVmReallocationMean) + "\n");
 				Log.printLine(String.format(
 						"Execution time - VM reallocation stDev: %.5f sec",
 						executionTimeVmReallocationStDev));
+				resultSB.append(String.format(
+						"Execution time - VM reallocation stDev: %.5f sec",
+						executionTimeVmReallocationStDev) + "\n");
 				Log.printLine(String.format("Execution time - total mean: %.5f sec", executionTimeTotalMean));
+				resultSB.append(String.format("Execution time - total mean: %.5f sec", executionTimeTotalMean) + "\n");
 				Log.printLine(String
 						.format("Execution time - total stDev: %.5f sec", executionTimeTotalStDev));
+				resultSB.append(String
+						.format("Execution time - total stDev: %.5f sec", executionTimeTotalStDev) + "\n");
 			}
 			Log.printLine();
 		}
 
 		Log.setDisabled(true);
+		return resultSB.toString();
 	}
 
 	/**

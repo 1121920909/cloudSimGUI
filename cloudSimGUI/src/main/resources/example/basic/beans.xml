@@ -6,4 +6,5 @@
     <bean class="example.basic.CloudSimExample2" id="cloudSimExample2" />
     <bean class="example.basic.CloudSimExample3" id="cloudSimExample3" />
     <bean class="example.basic.CloudSimExample4" id="cloudSimExample4" />
+    <bean class="example.basic.CloudSimExample5" id="cloudSimExample5" />
 </beans>

@@ -21,4 +21,8 @@ public class CloudSimExampleTest {
     public void cloudSimExample4Test(){
         System.out.println(new CloudSimExample4().formatInfo());
     }
+    @Test
+    public void cloudSimExample5Test(){
+        System.out.println(new CloudSimExample5().formatInfo());
+    }
 }

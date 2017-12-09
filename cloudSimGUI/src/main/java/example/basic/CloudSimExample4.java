@@ -43,9 +43,12 @@ public class CloudSimExample4 extends BasicExample {
         vmid++;
         Vm vm2 = new Vm(vmid, brokerId, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerTimeShared());
 
+        vmid++;
+        Vm vm3 = new Vm(vmid, brokerId, mips, pesNumber, ram, bw, size, vmm, new CloudletSchedulerTimeShared());
         //add the VMs to the vmList
         vmList.add(vm1);
         vmList.add(vm2);
+        //vmList.add(vm3);
 
         //submit vm list to the broker
         broker.submitVmList(vmList);
@@ -80,7 +83,7 @@ public class CloudSimExample4 extends BasicExample {
         // will submit the bound cloudlets only to the specific VM
         broker.bindCloudletToVm(cloudlet1.getCloudletId(),vm1.getId());
         broker.bindCloudletToVm(cloudlet2.getCloudletId(),vm2.getId());
-
+        //broker.bindCloudletToVm(cloudlet1.getCloudletId(),vm3.getId());
         // Sixth step: Starts the simulation
         CloudSim.startSimulation();
 

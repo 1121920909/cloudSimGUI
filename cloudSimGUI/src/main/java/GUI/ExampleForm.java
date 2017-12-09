@@ -2,6 +2,7 @@ package GUI;
 
 import example.basic.BasicExample;
 import example.basic.CloudSimExample1;
+import example.power.PowerExampleFactory;
 import org.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -44,12 +45,30 @@ public class ExampleForm {
 
     public ExampleForm() {
         basicExbutton.addActionListener(new ActionListener() {
+            @Override
             public void actionPerformed(ActionEvent e) {
                 String select = basicComboBox.getSelectedItem().toString();
                 String configPath = "example/basic/beans.xml";
                 ApplicationContext context = new ClassPathXmlApplicationContext(configPath);
                 BasicExample basicExample = (BasicExample) context.getBean(select);
                 ResultForm.show(basicExample.formatInfo());
+            }
+        });
+        netExButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String select = basicComboBox.getSelectedItem().toString();
+            }
+        });
+        powExButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String select = powComboBox.getSelectedItem().toString();
+                select = select.toLowerCase();
+                String configPath = "example/power/beans.xml";
+                ApplicationContext context = new ClassPathXmlApplicationContext(configPath);
+                PowerExampleFactory example = (PowerExampleFactory) context.getBean(select);
+                ResultForm.show(example.getResutl());
             }
         });
     }
