@@ -117,12 +117,12 @@
                   <text value="Size :"/>
                 </properties>
               </component>
-              <component id="908e2" class="javax.swing.JLabel" binding="policyLabel">
+              <component id="908e2" class="javax.swing.JLabel" binding="vmNumLabel">
                 <constraints>
                   <grid row="2" column="2" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="0" use-parent-layout="false"/>
                 </constraints>
                 <properties>
-                  <text value="Policy :"/>
+                  <text value="VM Num"/>
                 </properties>
               </component>
               <component id="5a13c" class="javax.swing.JTextField" binding="textField1" default-binding="true">
@@ -165,9 +165,11 @@
                 </constraints>
                 <properties/>
               </component>
-              <component id="932d8" class="javax.swing.JComboBox" binding="policyBox">
+              <component id="efe24" class="javax.swing.JTextField" binding="vmNumText">
                 <constraints>
-                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="2" anchor="8" fill="1" indent="0" use-parent-layout="false"/>
+                  <grid row="2" column="3" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="8" fill="1" indent="0" use-parent-layout="false">
+                    <preferred-size width="150" height="-1"/>
+                  </grid>
                 </constraints>
                 <properties/>
               </component>

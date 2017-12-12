@@ -23,8 +23,7 @@ public class CustomForm {
     private JLabel ramLabel;
     private JLabel bwLabel;
     private JLabel sizeLabel;
-    private JLabel policyLabel;
-    private JComboBox policyBox;
+    private JLabel vmNumLabel;
     private JTextField lengthText;
     private JTextField cloPeNumText;
     private JTextField fileSizeText;
@@ -43,4 +42,5 @@ public class CustomForm {
     private JComboBox cpuModelBox;
     private JComboBox ramModelBox;
     private JComboBox bwModelBox;
+    private JTextField vmNumText;
 }

@@ -28,9 +28,7 @@ public class CustomDataCenter {
     private JLabel costPerBwLabel;
     private JButton confirmButton;
     private JTextField hostNumText;
-    private JLabel timeZoneLabel;
     private JLabel hostNumLabel;
-    private JComboBox timeZoneBox;
     private JPanel hostPanel;
     private JPanel titlePanel;
     private JPanel mainPanel;
