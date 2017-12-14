@@ -13,7 +13,6 @@ import java.util.Calendar;
 import java.util.List;
 
 public class CustomSimulation {
-    private List<VM> test;
     private List<Vm> vmList;
     private List<Pe> peList;
     private List<Host> hostList;
