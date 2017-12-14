@@ -1,5 +1,7 @@
 package GUI.custom;
 
+import custom.CustomSimulation;
+
 import javax.swing.*;
 
 public class CustomForm {
@@ -33,14 +35,13 @@ public class CustomForm {
     private JLabel cluPeNumLabel;
     private JLabel fileSizeLabel;
     private JLabel outputSizeLabel;
-    private JLabel cpuModelLabel;
-    private JLabel ramModelLabel;
-    private JLabel bwModelLabel;
     private JLabel cloNumLabel;
     private JButton simulationButton;
     private JPanel buttonPanel;
-    private JComboBox cpuModelBox;
-    private JComboBox ramModelBox;
-    private JComboBox bwModelBox;
     private JTextField vmNumText;
+    private CustomSimulation simulation;
+
+    public CustomForm() {
+        simulation = new CustomSimulation();
+    }
 }

@@ -8,6 +8,7 @@ import org.cloudbus.cloudsim.provisioners.RamProvisionerSimple;
 import sun.misc.VM;
 import sun.security.util.PendingException;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -85,7 +86,7 @@ public class CustomSimulation {
     public void setVmList(int vmNum,int mips,int peNum,int ram,int bw,long size){
         vmList.clear();
         for(int i = 0; i < vmNum; i++){
-            vmList.add(new Vm(i,broker.getId(),mips,peNum,ram,bw,size,"Xen",new CloudletSchedulerTimeShared()));
+            vmList.add(new Vm(i,broker.getId(),mips,peNum,ram,bw,size,"Xen",new CloudletSchedulerSpaceShared()));
         }
     }
 
@@ -103,5 +104,37 @@ public class CustomSimulation {
     public void simulationStart(){
         broker.submitVmList(vmList);
         broker.submitCloudletList(cloudletList);
+        int vmId;
+        for(int i = 0;i < cloudletList.size();i++) {
+            vmId = (int)(Math.random() * vmList.size());
+            broker.bindCloudletToVm(cloudletList.get(i).getCloudletId(),vmId);
+        }
+        CloudSim.startSimulation();
+        resultList = broker.getCloudletReceivedList();
+        CloudSim.stopSimulation();
+    }
+
+    public String formatInfo(){
+        StringBuilder sb = new StringBuilder();
+        Cloudlet cloudlet;
+        String indent = "\t";
+        sb.append("========== OUTPUT ==========\n");
+        sb.append("Cloudlet ID\tSTATUS\tData center ID\tVM ID\tTime\tStart Time\tFinish Time\n");
+        DecimalFormat dft = new DecimalFormat("###.##");
+        for(int i = 0;i < resultList.size();i++){
+            cloudlet = resultList.get(i);
+            sb.append(cloudlet.getCloudletId() + indent);
+            if(cloudlet.getStatus() == Cloudlet.SUCCESS){
+                sb.append("SUCCESS" + indent + cloudlet.getResourceId()
+                        + indent + cloudlet.getVmId()
+                        + indent
+                        + dft.format(cloudlet.getActualCPUTime()) + indent
+                        + dft.format(cloudlet.getExecStartTime())
+                        + indent
+                        + dft.format(cloudlet.getFinishTime()) + "\n");
+            }
+
+        }
+        return sb.toString();
     }
 }

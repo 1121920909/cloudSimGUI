@@ -1,5 +1,7 @@
 package GUI.custom;
 
+import custom.CustomSimulation;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -34,6 +36,10 @@ public class CustomDataCenter {
     private JPanel mainPanel;
     private JPanel confirmPanel;
 
+
+    private static CustomSimulation simulation = null;
+    private static JFrame frame = null;
+
     public CustomDataCenter() {
         confirmButton.addActionListener(new ActionListener() {
             @Override
@@ -41,5 +47,18 @@ public class CustomDataCenter {
 
             }
         });
+    }
+
+    public static void showCustomDatacenter(CustomSimulation inSimulation){
+        if(simulation == null){
+            simulation = inSimulation;
+        }
+        if (frame == null) {
+            frame = new JFrame("CusomDatacenter");
+            frame.setContentPane(new CustomDataCenter().mainPanel);
+            frame.setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
+        }
+        frame.pack();
+        frame.setVisible(true);
     }
 }
