@@ -112,6 +112,7 @@ public class CustomSimulation {
         CloudSim.startSimulation();
         resultList = broker.getCloudletReceivedList();
         CloudSim.stopSimulation();
+
     }
 
     public String formatInfo(){
@@ -133,7 +134,6 @@ public class CustomSimulation {
                         + indent
                         + dft.format(cloudlet.getFinishTime()) + "\n");
             }
-
         }
         return sb.toString();
     }

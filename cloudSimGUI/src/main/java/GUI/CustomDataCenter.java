@@ -1,4 +1,4 @@
-package GUI.custom;
+package GUI;
 
 import custom.CustomSimulation;
 
@@ -8,7 +8,7 @@ import java.awt.event.ActionListener;
 
 public class CustomDataCenter {
     private JLabel titleLabel;
-    private JTextField peMips;
+    private JTextField peMipsText;
     private JPanel pePanel;
     private JLabel peLabel;
     private JTextField ramText;
@@ -44,15 +44,39 @@ public class CustomDataCenter {
         confirmButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                int peNum;
+                int peMIPS;
+                int hostRam;
+                int hostBw;
+                long hostStorage;
+                int hostNum;
+                double dcPerCostSec;
+                double dcPerCostMem;
+                double dcPerCostBw;
+                double dcPerCostStorage;
 
+                peNum = Integer.valueOf(peNumText.getText());
+                peMIPS = Integer.valueOf(peMipsText.getText());
+                hostRam = Integer.valueOf(ramText.getText());
+                hostBw = Integer.valueOf(bwText.getText());
+                hostStorage = Long.valueOf(storageText.getText());
+                hostNum = Integer.valueOf(hostNumText.getText());
+                dcPerCostSec = Double.valueOf(costSecText.getText());
+                dcPerCostMem = Double.valueOf(costMemText.getText());
+                dcPerCostBw = Double.valueOf(costBwText.getText());
+                dcPerCostStorage = Double.valueOf(costMemText.getText());
+
+                simulation.setPeList(peMIPS,peNum);
+                simulation.setHostList(hostRam,hostStorage,hostBw,hostNum);
+                simulation.createDatacenterCharactersitics(dcPerCostSec,dcPerCostMem,dcPerCostStorage,dcPerCostBw);
+                frame.setVisible(false);
             }
         });
     }
 
     public static void showCustomDatacenter(CustomSimulation inSimulation){
-        if(simulation == null){
             simulation = inSimulation;
-        }
+
         if (frame == null) {
             frame = new JFrame("CusomDatacenter");
             frame.setContentPane(new CustomDataCenter().mainPanel);

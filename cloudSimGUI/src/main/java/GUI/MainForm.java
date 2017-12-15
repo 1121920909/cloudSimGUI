@@ -25,6 +25,12 @@ public class MainForm {
                 exampleForm.showForm();
             }
         });
+        simulationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                CustomForm.show();
+            }
+        });
     }
 
     public  void showForm() {

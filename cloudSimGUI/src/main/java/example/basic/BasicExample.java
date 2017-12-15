@@ -110,7 +110,6 @@ public class BasicExample {
                         + indent
                         + dft.format(cloudlet.getFinishTime()) + "\n");
             }
-
         }
         return sb.toString();
     }
